@@ -1,0 +1,37 @@
+
+(To do)
+
+Criar as models [Done]
+Configurar Spring security + JWT []
+Conectar com o banco de dados []
+Criar os services e os controllers [] 
+	* Não esquecer que eles usam HATEOAS
+	* Criar Logs consistentes
+Criar testes unitarios []
+Implementar meios de pagamento []
+Implementar notificacoes por email []
+
+
+Apagar esse to do e criar um para o frontend []
+
+-------------------------------------------------------------
+
+🏥 Plataforma de Acompanhamento Médico Online
+📌 Descrição
+Pacientes podem agendar consultas e acessar relatórios enviados por médicos.
+
+✅ Funcionalidades
+Cadastro de paciente e médico
+
+Autenticação JWT com diferentes roles
+
+Agendamento de consultas com pagamento via Stripe
+
+E-mail e SMS lembrando da consulta
+
+Upload de laudos/exames por parte do médico
+
+Histórico de consultas e documentos
+
+Feedback do paciente após a consulta
+

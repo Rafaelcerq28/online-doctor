@@ -3,20 +3,56 @@ package com.medicine.online_doctor.model;
 import java.time.Instant;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "patient")
 public class Patient {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "login_details_id")
     private LoginDetails loginDetails;
-    private String email;
-    private String name;
-    private String surname;
-    private int age;
-    private String gender;
-    private String phone;
-    private String address;
-    private List<Consultation> medicalHistoy;
-    // payment history
     
+    @Column(unique=true,nullable = false)
+    private String email;
+    
+    private String name;
+    @Column(nullable = false)
+    private String surname;
+    @Column(nullable = false)
+    private int age;
+    private String nationality;
+
+    private String gender;
+    @Column(nullable = false)
+    private String phone;
+    @Column(nullable = false)
+    private String address;
+    
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    private List<MedicalAppointment> medicalHistoy;
+
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    private List<Payments> paymentHistory;
+
+    @CreationTimestamp
     private Instant createdAt;
     
     public Patient() {
@@ -46,7 +82,6 @@ public class Patient {
         this.email = email;
     }
 
-
     public String getName() {
         return name;
     }
@@ -69,6 +104,14 @@ public class Patient {
 
     public void setAge(int age) {
         this.age = age;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
     }
 
     public String getGender() {
@@ -95,11 +138,11 @@ public class Patient {
         this.address = address;
     }
 
-    public List<Consultation> getMedicalHistoy() {
+    public List<MedicalAppointment> getMedicalHistoy() {
         return medicalHistoy;
     }
 
-    public void setMedicalHistoy(List<Consultation> medicalHistoy) {
+    public void setMedicalHistoy(List<MedicalAppointment> medicalHistoy) {
         this.medicalHistoy = medicalHistoy;
     }
 
@@ -111,22 +154,25 @@ public class Patient {
         this.createdAt = createdAt;
     }
 
+    public List<Payments> getPaymentHistory() {
+        return paymentHistory;
+    }
+
+    public void setPaymentHistory(List<Payments> paymentHistory) {
+        this.paymentHistory = paymentHistory;
+    }
+
+    
     @Override
     public String toString() {
         return "Patient [id=" + id + ", loginDetails=" + loginDetails + ", email=" + email + ", name=" + name
-                + ", surname=" + surname + ", age=" + age + ", gender=" + gender + ", phone=" + phone + ", address="
-                + address + ", medicalHistoy=" + medicalHistoy + "]";
+                + ", surname=" + surname + ", age=" + age + ", nationality=" + nationality + ", gender=" + gender
+                + ", phone=" + phone + ", address=" + address + ", medicalHistoy=" + medicalHistoy + ", createdAt="
+                + createdAt + "]";
     }
 
 
-
-
-
-
-
-
     
-
     
 }
 

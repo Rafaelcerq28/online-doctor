@@ -2,13 +2,36 @@ package com.medicine.online_doctor.model;
 
 import java.time.Instant;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "medical_appointment")
 public class MedicalAppointment {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Instant date;
+
+    @ManyToOne
+    @JoinColumn(name = "doctor_id", nullable = false)
     private Doctor doctor;
+
+    @ManyToOne
+    @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
+
+    @OneToOne
+    @JoinColumn(name = "consultation_id", nullable = false)
+    private Consultation consultation;
+    
     private String paymentStatus;
 
     public MedicalAppointment() {
@@ -49,6 +72,14 @@ public class MedicalAppointment {
     public String toString() {
         return "MedicalAppointments [id=" + id + ", date=" + date + ", doctor=" + doctor + ", patient=" + patient
                 + ", paymentStatus=" + paymentStatus + "]";
+    }
+
+    public Consultation getConsultation() {
+        return consultation;
+    }
+
+    public void setConsultation(Consultation consultation) {
+        this.consultation = consultation;
     }
 
     

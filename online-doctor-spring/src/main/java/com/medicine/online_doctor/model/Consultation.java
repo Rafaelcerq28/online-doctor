@@ -1,9 +1,18 @@
 package com.medicine.online_doctor.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "consultation")
 public class Consultation {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private MedicalAppointment medicalAppointment;
     private String medicalEvaluation;
     private String exams;
     private boolean needReturn;
@@ -16,12 +25,7 @@ public class Consultation {
     public void setId(Long id) {
         this.id = id;
     }
-    public MedicalAppointment getMedicalAppointment() {
-        return medicalAppointment;
-    }
-    public void setMedicalAppointment(MedicalAppointment medicalAppointment) {
-        this.medicalAppointment = medicalAppointment;
-    }
+
     public String getMedicalEvaluation() {
         return medicalEvaluation;
     }
@@ -55,7 +59,7 @@ public class Consultation {
 
     @Override
     public String toString() {
-        return "Consultation [id=" + id + ", medicalAppointment=" + medicalAppointment + ", medicalEvaluation="
+        return "Consultation [id=" + id +  ", medicalEvaluation="
                 + medicalEvaluation + ", exams=" + exams + ", needReturn=" + needReturn + ", prescription="
                 + prescription + ", medicalReport=" + medicalReport + "]";
     }

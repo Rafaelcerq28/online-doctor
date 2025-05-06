@@ -2,13 +2,35 @@ package com.medicine.online_doctor.model;
 
 import java.time.Instant;
 
-public class LoginDetails {
+import org.hibernate.annotations.CreationTimestamp;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "login_details")
+public class LoginDetails {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(nullable = false)
     private String username;
+    @Column(nullable = false)
     private String password;
+    @Enumerated(EnumType.STRING)
     private Roles role;
+    
     private String token;
+
+    @CreationTimestamp
     private Instant createdAt;
 
     public Long getId() {
