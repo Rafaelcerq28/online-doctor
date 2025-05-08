@@ -5,12 +5,12 @@ Criar as models [Done]
 Configurar Spring security + JWT []
 Conectar com o banco de dados [Done]
 Criar os services e os controllers [] 
-	* Não esquecer que eles usam HATEOAS
-	* Criar Logs consistentes
-Criar testes unitarios []
+	* Não esquecer que é RESTful (usar HATEOAS)
+	* Criar Logs consistentes (logger)
+Criar testes unitarios 1[]
 Implementar meios de pagamento []
 Implementar notificacoes por email []
-
+Criar testes unitarios 2[]
 
 Apagar esse to do e criar um para o frontend []
 
