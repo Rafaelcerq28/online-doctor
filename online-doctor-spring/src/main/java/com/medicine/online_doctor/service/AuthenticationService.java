@@ -63,6 +63,6 @@ public class AuthenticationService {
                 return ResponseEntity.ok(authDTO);
             }
 
-        return ResponseEntity.status(204).build();
+        return ResponseEntity.status(401).build();
     }
 }
