@@ -26,7 +26,7 @@ public class AuthenticationService {
 
     private JWTService jwtService;
         
-    
+    // Constructor injection for dependencies
     public AuthenticationService(LoginDetailsRepository loginDetailsRepository,
             AuthenticationManager authenticationManager, JWTService jwtService) {
         this.loginDetailsRepository = loginDetailsRepository;
@@ -34,6 +34,7 @@ public class AuthenticationService {
         this.jwtService = jwtService;
     }
 
+    // Method to add a new user
     public ResponseEntity<LoginDetails> addUser(LoginDetails user) {
 
         Optional<LoginDetails> userToCheck = loginDetailsRepository.findByUsername(user.getUsername());
@@ -47,10 +48,11 @@ public class AuthenticationService {
         return ResponseEntity.ok(userToSave);
     }
 
+    // Method to login a user
     public ResponseEntity<AuthenticationDTO> login(LoginDetails user){
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
 
-            // If the user is authenticated, generate a JWT token
+            // If the user is authenticated, generate a JWT token and send it back to the client
             if(authentication.isAuthenticated()){
                 Optional<LoginDetails> authenticatedUser = loginDetailsRepository.findByUsername(user.getUsername());
                 

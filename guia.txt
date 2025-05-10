@@ -2,8 +2,9 @@
 (To do)
 
 Criar as models [Done]
-Configurar Spring security + JWT []
+Configurar Spring security + JWT [Done]
 Conectar com o banco de dados [Done]
+Criar exceptions []
 Criar os services e os controllers [] 
 	* Não esquecer que é RESTful (usar HATEOAS)
 	* Criar Logs consistentes (logger)
