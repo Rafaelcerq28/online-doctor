@@ -45,8 +45,11 @@ public class User {
     @Column(nullable = false)
     private String address;
 
+    private boolean isActive;
+
     @CreationTimestamp
     private Instant createdAt;
+
 
     public Long getId() {
         return id;
@@ -120,12 +123,22 @@ public class User {
         this.createdAt = createdAt;
     }
 
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+
     @Override
     public String toString() {
         return "User [id=" + id + ", loginDetails=" + loginDetails + ", email=" + email + ", name=" + name
                 + ", surname=" + surname + ", nationality=" + nationality + ", phone=" + phone + ", address=" + address
-                + ", createdAt=" + createdAt + "]";
+                + ", isActive=" + isActive + ", createdAt=" + createdAt + "]";
     }
+
+
 
 
 }

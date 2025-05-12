@@ -11,7 +11,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.medicine.online_doctor.DTO.AuthenticationDTO;
+import com.medicine.online_doctor.exeptions.ArgumentNotValidException;
+import com.medicine.online_doctor.exeptions.UserAlreadyExistException;
 import com.medicine.online_doctor.model.LoginDetails;
+import com.medicine.online_doctor.model.Roles;
 import com.medicine.online_doctor.repository.LoginDetailsRepository;
 import com.medicine.online_doctor.service.security.JWTService;
 
@@ -40,14 +43,17 @@ public class AuthenticationService {
         Optional<LoginDetails> userToCheck = loginDetailsRepository.findByUsername(user.getUsername());
 
         if(userToCheck.isPresent() == true){
-            return ResponseEntity.badRequest().build();
+            throw new UserAlreadyExistException("Patient already exists with this username");
         }else if(user.getUsername().isEmpty() == true || user.getPassword().isEmpty() == true || 
                 user.getUsername().contains(" ") || user.getPassword().contains(" ")){
             
-            return ResponseEntity.badRequest().build();
+            throw new ArgumentNotValidException("Username and password cannot be empty or contain spaces");
         }
 
         user.setPassword(encoder.encode(user.getPassword()));
+        // Set the default role for the user
+        user.setRole(Roles.ROLE_PATIENT);
+        
         LoginDetails userToSave = loginDetailsRepository.save(user);
         return ResponseEntity.ok(userToSave);
     }

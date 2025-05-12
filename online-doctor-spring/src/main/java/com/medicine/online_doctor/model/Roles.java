@@ -2,7 +2,7 @@ package com.medicine.online_doctor.model;
 
 public enum Roles {
     ROLE_ADMIN,
-    ROLE_PARIENT,
+    ROLE_PATIENT,
     ROLE_DOCTOR
 
 }
