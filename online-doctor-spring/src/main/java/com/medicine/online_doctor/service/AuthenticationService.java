@@ -41,8 +41,12 @@ public class AuthenticationService {
 
         if(userToCheck.isPresent() == true){
             return ResponseEntity.badRequest().build();
+        }else if(user.getUsername().isEmpty() == true || user.getPassword().isEmpty() == true || 
+                user.getUsername().contains(" ") || user.getPassword().contains(" ")){
+            
+            return ResponseEntity.badRequest().build();
         }
-        
+
         user.setPassword(encoder.encode(user.getPassword()));
         LoginDetails userToSave = loginDetailsRepository.save(user);
         return ResponseEntity.ok(userToSave);
