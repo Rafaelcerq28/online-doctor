@@ -42,17 +42,20 @@ public class UserService {
 
         String username = jwtService.extractUserName(token);
 
+        //check if the user already exists in the database
         Optional<LoginDetails> userToSearch = loginDetailsRepository.findByUsername(username);
 
         if (userToSearch.isPresent() == false) {
             throw new UserNotFoundException("User not found with username: " + username);
         }
 
-        //set the login details for the patient
+        //set the login details for the patient and active to true
         patient.setLoginDetails(userToSearch.get());
         patient.setActive(true);
 
         Patient storedPatient = patientRepository.save(patient);
+
+        //inserir o endpoint com a localização (/parient/id)
 
         return ResponseEntity.ok().body(storedPatient);
     }
