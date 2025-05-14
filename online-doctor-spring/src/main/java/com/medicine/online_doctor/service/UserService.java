@@ -50,6 +50,7 @@ public class UserService {
 
         //set the login details for the patient
         patient.setLoginDetails(userToSearch.get());
+        patient.setActive(true);
 
         Patient storedPatient = patientRepository.save(patient);
 

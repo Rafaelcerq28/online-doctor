@@ -27,10 +27,10 @@ public class Doctor extends User {
     @Column(nullable = true)
     private String specialisation;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String registrationCode;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private double price;
 
     private double rating;

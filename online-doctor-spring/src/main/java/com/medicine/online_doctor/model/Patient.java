@@ -24,7 +24,7 @@ import jakarta.persistence.Table;
 public class Patient extends User {
 
     
-    @Column(nullable = true)
+    @Column(nullable = false)
     private int age;
 
     private String gender;
