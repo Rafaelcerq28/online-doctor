@@ -23,14 +23,12 @@ import com.medicine.online_doctor.service.security.JWTService;
 public class PatientService {
 
     private PatientRepository patientRepository;
-    private DoctorRepository doctorRepository;
     private LoginDetailsRepository loginDetailsRepository;
     private JWTService jwtService;
 
-    public PatientService(PatientRepository patientRepository, DoctorRepository doctorRepository,
+    public PatientService(PatientRepository patientRepository,
             LoginDetailsRepository loginDetailsRepository, JWTService jwtService) {
         this.patientRepository = patientRepository;
-        this.doctorRepository = doctorRepository;
         this.loginDetailsRepository = loginDetailsRepository;
         this.jwtService = jwtService;
     }

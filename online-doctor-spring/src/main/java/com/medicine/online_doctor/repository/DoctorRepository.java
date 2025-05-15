@@ -10,5 +10,5 @@ import com.medicine.online_doctor.model.Patient;
 
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, Long> {
-    Optional<Doctor>  findByEmail(String email);
+    Optional<Doctor> findByEmail(String email);
 }
