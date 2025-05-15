@@ -20,7 +20,6 @@ public class UserController {
     }
 
     // Logic to create a patient
-    @PostMapping("/patient")
     public ResponseEntity<Patient> createPatient(@RequestBody Patient patient, @RequestHeader("Authorization") String authHeader) {
         String token = authHeader.replace("Bearer ", "");
         return userService.createPatient(patient,token);
