@@ -48,6 +48,12 @@ public class PatientController {
         return patientService.getPatientById(id);
     }
 
+    @GetMapping("/patient/username/{username}")
+    @ResponseStatus(HttpStatus.OK)
+    public EntityModel<Patient> getPatientByUsername(@PathVariable(value = "username") String username) {
+        return patientService.getPatientByUsername(username);
+    }
+
     @PutMapping("/patient/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Patient> updatePatient(@PathVariable(value = "id") Long id, @RequestBody Patient patient) {

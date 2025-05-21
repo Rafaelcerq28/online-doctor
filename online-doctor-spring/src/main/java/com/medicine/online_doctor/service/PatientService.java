@@ -77,6 +77,21 @@ public class PatientService {
         return entityModel;
     }
 
+    public EntityModel<Patient> getPatientByUsername(String username) {
+        Optional<LoginDetails> userToSearch = loginDetailsRepository.findByUsername(username);
+        Optional<Patient> patient = patientRepository.findByLoginDetails(userToSearch.get());
+
+        if (patient.isEmpty()) {
+            throw new UserNotFoundException("User not found with username: " + username);
+        }
+
+        //gerar outros metodos para mandar no entity model
+
+        EntityModel<Patient> entityModel = EntityModel.of(patient.get());
+
+        return entityModel;
+    }
+
     public ResponseEntity<Patient> updatePatient(Long id, Patient patient) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'updatePatient'");
@@ -92,5 +107,7 @@ public class PatientService {
         patientRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
+
+
     
 }
