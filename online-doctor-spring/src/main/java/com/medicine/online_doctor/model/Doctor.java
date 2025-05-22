@@ -85,6 +85,26 @@ public class Doctor extends User {
     }
 
 
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+
+    public Specialisation getSpecialisation() {
+        return Specialisation;
+    }
+
+
+    public void setSpecialisation(Specialisation specialisation) {
+        Specialisation = specialisation;
+    }
+
+
 
 
     

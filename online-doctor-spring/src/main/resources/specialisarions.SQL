@@ -1,0 +1,21 @@
+INSERT INTO specialisation (name) VALUES
+('Cardiology'),
+('Dermatology'),
+('Endocrinology'),
+('Gastroenterology'),
+('General Practice'),
+('Geriatrics'),
+('Gynecology'),
+('Hematology'),
+('Neurology'),
+('Nephrology'),
+('Oncology'),
+('Ophthalmology'),
+('Orthopedics'),
+('Otolaryngology'),  -- ENT: Ear, Nose, Throat
+('Pediatrics'),
+('Psychiatry'),
+('Pulmonology'),
+('Radiology'),
+('Rheumatology'),
+('Urology');
