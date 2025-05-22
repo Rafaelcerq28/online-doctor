@@ -2,6 +2,8 @@ package com.medicine.online_doctor.model;
 
 import java.time.Instant;
 
+import org.hibernate.annotations.CreationTimestamp;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -34,6 +36,9 @@ public class MedicalAppointment {
     
     private String paymentStatus;
 
+    @CreationTimestamp
+    private Instant createdAt;
+    
     public MedicalAppointment() {
     }
     

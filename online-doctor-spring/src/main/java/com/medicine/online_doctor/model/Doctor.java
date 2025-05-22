@@ -15,6 +15,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -24,9 +25,6 @@ import jakarta.persistence.Table;
 public class Doctor extends User {
 
 
-    @Column(nullable = true)
-    private String specialisation;
-
     @Column(nullable = false)
     private String registrationCode;
 
@@ -35,19 +33,15 @@ public class Doctor extends User {
 
     private double rating;
     private int experience;
+    
+    @CreationTimestamp
+    private Instant createdAt;
 
+    @ManyToOne
+    @JoinColumn(name = "specialisation_id")
+    private Specialisation Specialisation;
 
     public Doctor() {
-    }
-
-
-    public String getSpecialisation() {
-        return specialisation;
-    }
-
-
-    public void setSpecialisation(String specialisation) {
-        this.specialisation = specialisation;
     }
 
 
@@ -91,11 +85,6 @@ public class Doctor extends User {
     }
 
 
-    @Override
-    public String toString() {
-        return "Doctor [specialisation=" + specialisation + ", registrationCode=" + registrationCode + ", price="
-                + price + ", rating=" + rating + ", experience=" + experience + "]";
-    }
 
 
     

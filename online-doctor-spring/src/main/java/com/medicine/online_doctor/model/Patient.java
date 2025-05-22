@@ -35,6 +35,9 @@ public class Patient extends User {
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     private List<Payments> paymentHistory;
     
+    @CreationTimestamp
+    private Instant createdAt;
+    
     public Patient() {
     }
 
