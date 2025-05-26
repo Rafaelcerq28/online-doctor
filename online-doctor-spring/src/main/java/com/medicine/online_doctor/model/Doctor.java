@@ -39,7 +39,7 @@ public class Doctor extends User {
 
     @ManyToOne
     @JoinColumn(name = "specialisation_id")
-    private Specialisation Specialisation;
+    private Specialisation specialisation;
 
     public Doctor() {
     }
@@ -96,12 +96,12 @@ public class Doctor extends User {
 
 
     public Specialisation getSpecialisation() {
-        return Specialisation;
+        return specialisation;
     }
 
 
     public void setSpecialisation(Specialisation specialisation) {
-        Specialisation = specialisation;
+        specialisation = specialisation;
     }
 
 

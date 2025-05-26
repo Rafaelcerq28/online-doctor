@@ -82,5 +82,12 @@ public class Availability {
     public Availability() {
     }
 
+    @Override
+    public String toString() {
+        return "Availability [id=" + id + ", date=" + date + ", start=" + start + ", end=" + end + ", doctor=" + doctor
+                + ", createdAt=" + createdAt + "]";
+    }
+
+    
     
 }
