@@ -53,6 +53,14 @@ public class AvailabilityService {
             throw new UserNotFoundException("Doctor not found. ");
         }
 
+        /*
+         * - Criar regras tipo:
+         * - Verificar se o médico já tem disponibilidade para a mesma data
+         * - Verificar se o médico já tem disponibilidade para a mesma hora
+         * - verificar se o fim da sessão é maior que o início
+         * - configurar para que o fim da sessão seja definido automaticamete, sempre 30 minutos após o início
+        */
+
         availability.setDoctor(doctorToSearch.get());
 
         availabilityRepository.save(availability);

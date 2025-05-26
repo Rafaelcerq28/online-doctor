@@ -48,5 +48,6 @@ public class AvailabilityController {
         return availabilityService.getAvailabilitiesBySpecialisation(specialisation,date);
     }
     
-
+    //cancelar availability
+    
 }
