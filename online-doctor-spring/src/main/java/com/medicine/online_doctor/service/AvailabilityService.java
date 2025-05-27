@@ -59,6 +59,7 @@ public class AvailabilityService {
          * - Verificar se o médico já tem disponibilidade para a mesma hora
          * - verificar se o fim da sessão é maior que o início
          * - configurar para que o fim da sessão seja definido automaticamete, sempre 30 minutos após o início
+         * - retornar todas as disponibilidades do médico para a mesma data no hateoas
         */
 
         availability.setDoctor(doctorToSearch.get());
@@ -87,6 +88,32 @@ public class AvailabilityService {
         
         if (availabilities.isEmpty()) {
             throw new UserNotFoundException("No availabilities found for specialisation: " + specialisation);
+        }
+        
+        return availabilities;
+    }
+
+    public void deleteAvailability(Long id) {
+        Optional<Availability> availabilityToDelete = availabilityRepository.findById(id);
+        
+        if (availabilityToDelete.isEmpty()) {
+            throw new UserNotFoundException("Availability not found with id: " + id);
+        }
+        
+        availabilityRepository.delete(availabilityToDelete.get());
+    }
+
+    public List<Availability> getAvailabilitiesByDoctor(Long doctorId) {
+        Optional<Doctor> doctorToSearch = doctorRepository.findById(doctorId);
+        
+        if (doctorToSearch.isEmpty()) {
+            throw new UserNotFoundException("Doctor not found with id: " + doctorId);
+        }
+        
+        List<Availability> availabilities = availabilityRepository.findByDoctor(doctorToSearch.get());
+        
+        if (availabilities.isEmpty()) {
+            throw new UserNotFoundException("No availabilities found for doctor with id: " + doctorId);
         }
         
         return availabilities;

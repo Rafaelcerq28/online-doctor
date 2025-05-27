@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.medicine.online_doctor.model.Availability;
+import com.medicine.online_doctor.model.Doctor;
 
 @Repository
 public interface AvailabilityRepository extends JpaRepository<Availability, Long> {
@@ -18,6 +19,8 @@ public interface AvailabilityRepository extends JpaRepository<Availability, Long
     WHERE a.date = :date AND a.doctor.specialisation.name = :specialisationName
 """)
 List<Availability> findBySpecialisationNameAndDate(@Param("specialisationName") String specialisationName, @Param("date") LocalDate date);
+
+List<Availability> findByDoctor(Doctor doctor);
 
 
 }
