@@ -1,6 +1,8 @@
 package com.medicine.online_doctor.service.security;
 
 import java.security.NoSuchAlgorithmException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
@@ -55,7 +57,8 @@ public class JWTService {
                 .subject(user.getUsername())
                 .issuedAt(new Date(System.currentTimeMillis()))
                 // Sets the expiration date to 30 minutes from the current time
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
+                // .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
+                .expiration(Date.from(Instant.now().plus(Duration.ofHours(10)))) // 30 minutes
                 .and()
                 .signWith(getKey())
                 .compact();

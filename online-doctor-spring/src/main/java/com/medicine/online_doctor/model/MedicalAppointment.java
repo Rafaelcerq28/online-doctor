@@ -20,6 +20,7 @@ public class MedicalAppointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     private Instant date;
 
     @ManyToOne
@@ -34,6 +35,10 @@ public class MedicalAppointment {
     @JoinColumn(name = "consultation_id", nullable = false)
     private Consultation consultation;
     
+    @OneToOne
+    @JoinColumn(name = "availability_id", nullable = false, unique = true)
+    private Availability availability;
+
     private String paymentStatus;
 
     @CreationTimestamp

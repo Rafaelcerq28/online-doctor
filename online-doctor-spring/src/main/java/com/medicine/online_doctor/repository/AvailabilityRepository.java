@@ -16,7 +16,7 @@ public interface AvailabilityRepository extends JpaRepository<Availability, Long
 
 @Query("""
     SELECT a FROM Availability a
-    WHERE a.date = :date AND a.doctor.specialisation.name = :specialisationName
+    WHERE a.date = :date AND a.doctor.specialisation.name = :specialisationName and a.isAvailable = true
 """)
 List<Availability> findBySpecialisationNameAndDate(@Param("specialisationName") String specialisationName, @Param("date") LocalDate date);
 

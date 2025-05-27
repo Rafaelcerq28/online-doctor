@@ -23,6 +23,7 @@ public class Availability {
     private LocalDate date;
     private LocalTime start;
     private LocalTime end;
+    private boolean isAvailable;
 
     @ManyToOne
     @JoinColumn(name = "doctor_id")
@@ -82,11 +83,21 @@ public class Availability {
     public Availability() {
     }
 
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
+    }
+
     @Override
     public String toString() {
-        return "Availability [id=" + id + ", date=" + date + ", start=" + start + ", end=" + end + ", doctor=" + doctor
-                + ", createdAt=" + createdAt + "]";
+        return "Availability [id=" + id + ", date=" + date + ", start=" + start + ", end=" + end + ", isAvailable="
+                + isAvailable + ", doctor=" + doctor + ", createdAt=" + createdAt + "]";
     }
+
+    
 
     
     

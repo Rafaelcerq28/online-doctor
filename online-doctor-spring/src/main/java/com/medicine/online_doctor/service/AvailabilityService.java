@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.stereotype.Service;
 
+import com.medicine.online_doctor.exeptions.NotAllowedException;
 import com.medicine.online_doctor.exeptions.UserNotFoundException;
 import com.medicine.online_doctor.model.Availability;
 import com.medicine.online_doctor.model.Doctor;
@@ -61,7 +62,7 @@ public class AvailabilityService {
          * - configurar para que o fim da sessão seja definido automaticamete, sempre 30 minutos após o início
          * - retornar todas as disponibilidades do médico para a mesma data no hateoas
         */
-
+        availability.setAvailable(true);
         availability.setDoctor(doctorToSearch.get());
 
         availabilityRepository.save(availability);
@@ -98,6 +99,10 @@ public class AvailabilityService {
         
         if (availabilityToDelete.isEmpty()) {
             throw new UserNotFoundException("Availability not found with id: " + id);
+        }
+        
+        if(availabilityToDelete.get().isAvailable() == false) {
+            throw new NotAllowedException("Availability with id: " + id + " is already in use and cannot be deleted.");
         }
         
         availabilityRepository.delete(availabilityToDelete.get());

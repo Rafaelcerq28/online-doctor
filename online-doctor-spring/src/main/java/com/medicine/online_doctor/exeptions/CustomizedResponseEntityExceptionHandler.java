@@ -37,6 +37,14 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         return new ResponseEntity<ErrorDetails>(errorDetails,HttpStatus.BAD_REQUEST);
     }
 
+    //Exception for user Not Allowed actions
+    @ExceptionHandler(NotAllowedException.class)
+    public final ResponseEntity<ErrorDetails> handleNotAllowed(Exception ex, WebRequest request) throws Exception {
+        ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(),ex.getMessage(),request.getDescription(false));
+
+        return new ResponseEntity<ErrorDetails>(errorDetails,HttpStatus.METHOD_NOT_ALLOWED);
+    }
+
     //Exception for validate methods
     @ExceptionHandler(ArgumentNotValidException.class)
     public final ResponseEntity<ErrorDetails> handleMethodArgumentNotValid(Exception ex, WebRequest request) throws Exception {
@@ -44,4 +52,6 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
         return new ResponseEntity<ErrorDetails>(errorDetails,HttpStatus.BAD_REQUEST);
     }
+
+
 }

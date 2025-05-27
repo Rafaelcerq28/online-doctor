@@ -22,13 +22,14 @@ import com.medicine.online_doctor.service.AvailabilityService;
 @RestController
 public class AvailabilityController {
 
-    AvailabilityService availabilityService;
+    private AvailabilityService availabilityService;
 
     // Constructor injection for AvailabilityService
     public AvailabilityController(AvailabilityService availabilityService) {
         this.availabilityService = availabilityService;
     }
 
+    //create availability
     @PostMapping("/availability")
     @ResponseStatus(HttpStatus.CREATED)
     public EntityModel<Availability> createAvailability(@RequestBody Availability availability, @RequestHeader("Authorization") String authHeader) {
@@ -36,12 +37,14 @@ public class AvailabilityController {
         return availabilityService.createAvailability(availability, token);
     }
 
+    //get all availabilities
     @GetMapping("/availability")
     @ResponseStatus(HttpStatus.OK)
     public List<Availability> getAllAvailabilities() {
         return availabilityService.getAllAvailabilities();
     }
 
+    //get availability by specialisation and date
     @GetMapping("/availability/{specialisation}/{date}")
     @ResponseStatus(HttpStatus.OK)
     public List<Availability> getAvailabilitiesBySpecialisation(@PathVariable(value = "specialisation") String specialisation, @PathVariable(value = "date") LocalDate date) {
@@ -49,13 +52,14 @@ public class AvailabilityController {
         return availabilityService.getAvailabilitiesBySpecialisation(specialisation,date);
     }
     
+    //delete availability by id
     @DeleteMapping("/availability/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAvailability(@PathVariable(value = "id") Long id) {
         availabilityService.deleteAvailability(id);
     }
 
-    //availability by doctor
+    //get availability by doctor id
     @GetMapping("/availability/doctor/{doctorId}")
     @ResponseStatus(HttpStatus.OK)
     public List<Availability> getAvailabilitiesByDoctor(@PathVariable(value = "doctorId") Long doctorId) {
