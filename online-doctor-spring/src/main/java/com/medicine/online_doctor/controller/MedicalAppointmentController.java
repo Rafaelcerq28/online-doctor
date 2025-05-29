@@ -1,6 +1,8 @@
 package com.medicine.online_doctor.controller;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.hateoas.EntityModel;
@@ -18,14 +20,11 @@ public class MedicalAppointmentController {
         this.medicalAppointmentService = medicalAppointmentService;
     }
 
-    @PostMapping("/appointments")
+    @PostMapping("/appointments/{availabilityId}/doctor/{doctorId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public EntityModel<MedicalAppointment> createAppointment() {
-        // Logic to create a medical appointment
-        // This will typically involve validating the request, saving the appointment to the database,
-        // and returning the created appointment as an EntityModel.
-        // return medicalAppointmentService.createAppointment();
-        return null;
+    public EntityModel<MedicalAppointment> createAppointment(@RequestHeader("Authorization") String authHeader, @PathVariable(value = "doctorId") Long doctorId, @PathVariable(value = "availabilityId") Long availabilityId) {
+        String token = authHeader.replace("Bearer ", "");
+        return medicalAppointmentService.createAppointment(doctorId, availabilityId, token);
     }
 
 }

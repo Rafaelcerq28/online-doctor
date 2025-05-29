@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
@@ -30,6 +32,7 @@ public class Patient extends User {
     private String gender;
     
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<MedicalAppointment> medicalHistoy;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)

@@ -1,9 +1,13 @@
 package com.medicine.online_doctor.model;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,7 +25,7 @@ public class MedicalAppointment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    private Instant date;
+    private LocalDateTime date;
 
     @ManyToOne
     @JoinColumn(name = "doctor_id", nullable = false)
@@ -29,6 +33,7 @@ public class MedicalAppointment {
 
     @ManyToOne
     @JoinColumn(name = "patient_id", nullable = false)
+    @JsonBackReference
     private Patient patient;
 
     @OneToOne
@@ -53,10 +58,10 @@ public class MedicalAppointment {
     public void setId(Long id) {
         this.id = id;
     }
-    public Instant getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
-    public void setDate(Instant date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
     public Doctor getDoctor() {
@@ -90,6 +95,22 @@ public class MedicalAppointment {
 
     public void setConsultation(Consultation consultation) {
         this.consultation = consultation;
+    }
+
+    public Availability getAvailability() {
+        return availability;
+    }
+
+    public void setAvailability(Availability availability) {
+        this.availability = availability;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
     }
 
     
