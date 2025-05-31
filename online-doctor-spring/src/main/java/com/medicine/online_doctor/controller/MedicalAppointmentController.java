@@ -1,10 +1,15 @@
 package com.medicine.online_doctor.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,4 +40,10 @@ public class MedicalAppointmentController {
         return medicalAppointmentService.cancelAppointment(doctorId, appointmentId, token);
     }
 
+    @GetMapping("/appointments/user")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<CollectionModel<EntityModel<MedicalAppointment>>> getUserAppointments(@RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.replace("Bearer ", "");
+        return medicalAppointmentService.getUserMedicalAppointments(token);
+    }
 }

@@ -1,12 +1,21 @@
 package com.medicine.online_doctor.service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.medicine.online_doctor.controller.DoctorController;
+import com.medicine.online_doctor.controller.MedicalAppointmentController;
+import com.medicine.online_doctor.controller.PatientController;
 import com.medicine.online_doctor.exeptions.NotAllowedException;
 import com.medicine.online_doctor.exeptions.UserNotFoundException;
 import com.medicine.online_doctor.model.Availability;
@@ -155,5 +164,44 @@ public class MedicalAppointmentService {
 
         return ResponseEntity.noContent().build();
     }
+
+    public ResponseEntity<CollectionModel<EntityModel<MedicalAppointment>>> getUserMedicalAppointments(String token) {
+        
+        String username = jwtService.extractUserName(token);
+
+        Optional<LoginDetails> userToSearch = loginDetailsRepository.findByUsername(username);
+
+        if (!userToSearch.isPresent() || userToSearch.get().getRole() != Roles.ROLE_PATIENT) {
+            throw new UserNotFoundException("User not found with username: " + username);
+        }
+
+        Optional<Patient> patient = patientRepository.findByLoginDetails(userToSearch.get());
+        if (patient.isEmpty()) {
+            throw new UserNotFoundException("Patient not found with username: " + username);
+        }
+
+        List<MedicalAppointment> medicalAppointments = medicalAppointmentRepository.findByPatientId(patient.get().getId());
+        
+        if (medicalAppointments.isEmpty()) {
+            throw new UserNotFoundException("No medical appointments found for patient with username: " + username);
+        }
+
+        // Create a collection model with links for each medical appointment
+        List<EntityModel<MedicalAppointment>> entity = new ArrayList<>();
+        
+        for(MedicalAppointment appointment : medicalAppointments){
+            entity.add(EntityModel.of(appointment,
+                WebMvcLinkBuilder.linkTo(methodOn(MedicalAppointmentController.class).getUserAppointments(token)).withSelfRel(),
+                WebMvcLinkBuilder.linkTo(methodOn(DoctorController.class).getDoctorById(appointment.getDoctor().getId())).withRel("doctor"),
+                WebMvcLinkBuilder.linkTo(methodOn(PatientController.class).getPatientById(appointment.getPatient().getId())).withRel("patient")));
+        }
+
+        CollectionModel<EntityModel<MedicalAppointment>> collectionModel = CollectionModel.of(entity);//,
+                // WebMvcLinkBuilder.linkTo(methodOn(MedicalAppointmentController.class).getUserAppointments(token)).withSelfRel());
+
+        return ResponseEntity.ok(collectionModel);
+    }
+
+
 
 }
