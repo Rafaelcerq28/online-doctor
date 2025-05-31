@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.hateoas.EntityModel;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.medicine.online_doctor.exeptions.NotAllowedException;
@@ -78,6 +79,8 @@ public class MedicalAppointmentService {
         if(availability.get().isAvailable() == false) {
             throw new NotAllowedException("Availability is not available with id: " + availabilityId);
         }
+
+        availability.get().setAvailable(false);
         
         MedicalAppointment medicalAppointment = new MedicalAppointment();
         medicalAppointment.setDoctor(doctor.get());
@@ -106,9 +109,51 @@ public class MedicalAppointmentService {
         return entityModel;
     }
 
-    public EntityModel<MedicalAppointment> cancelAppointment(Long doctorId, Long availabilityId, String token) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'cancelAppointment'");
+
+    //essa loginca precisa ficar melhorada, pois o paciente pode cancelar a consulta e estornar o pagamento
+    public ResponseEntity<MedicalAppointment> cancelAppointment(Long doctorId, Long appointmentId, String token) {
+        
+        String username = jwtService.extractUserName(token);
+
+        Optional<LoginDetails> userToSearch = loginDetailsRepository.findByUsername(username);
+
+        if (!userToSearch.isPresent() || userToSearch.get().getRole() != Roles.ROLE_PATIENT) {
+            throw new UserNotFoundException("User not found with username: " + username);
+        }
+
+        Optional<Patient> patient = patientRepository.findByLoginDetails(userToSearch.get());
+
+        if (patient.isEmpty()) {
+            throw new UserNotFoundException("Patient not found with username: " + username);
+        }
+        
+        Optional<Doctor> doctor = doctorRepository.findById(doctorId);
+
+        if (doctor.isEmpty()) {
+            throw new UserNotFoundException("Doctor not found with id: " + doctorId);
+        }
+
+        Optional<MedicalAppointment> medicalAppointment = medicalAppointmentRepository.findById(appointmentId);
+        if (medicalAppointment.isEmpty()) {
+            throw new UserNotFoundException("Medical appointment not found with id: " + appointmentId);
+        }
+
+        Optional<Availability> availability = availabilityRepository.findById(medicalAppointment.get().getAvailability().getId());
+
+        if (availability.isEmpty()) {
+            throw new UserNotFoundException("Availability not found with id: " + medicalAppointment.get().getAvailability().getId());
+        }
+
+        medicalAppointmentRepository.delete(medicalAppointment.get());
+        System.out.println("Medical appointment to cancel: " + medicalAppointment.get().getId());
+
+        Availability availabilityToSave = availability.get();
+        availabilityToSave.setAvailable(true);
+
+        System.out.println("Availability to save: " + availabilityToSave.isAvailable());
+        availabilityRepository.save(availabilityToSave);
+
+        return ResponseEntity.noContent().build();
     }
 
 }

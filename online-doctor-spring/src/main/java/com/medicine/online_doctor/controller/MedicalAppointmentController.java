@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import com.medicine.online_doctor.model.MedicalAppointment;
 import com.medicine.online_doctor.service.MedicalAppointmentService;
@@ -27,11 +28,11 @@ public class MedicalAppointmentController {
         return medicalAppointmentService.createAppointment(doctorId, availabilityId, token);
     }
 
-    @PostMapping("/appointments/{availabilityId}/doctor/{doctorId}/cancel")
-    @ResponseStatus(HttpStatus.OK)
-    public EntityModel<MedicalAppointment> cancelAppointment(@RequestHeader("Authorization") String authHeader, @PathVariable(value = "doctorId") Long doctorId, @PathVariable(value = "availabilityId") Long availabilityId) {
+    @PostMapping("/appointments/{appointmentId}/doctor/{doctorId}/cancel")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public ResponseEntity<MedicalAppointment> cancelAppointment(@RequestHeader("Authorization") String authHeader, @PathVariable(value = "doctorId") Long doctorId, @PathVariable(value = "appointmentId") Long appointmentId) {
         String token = authHeader.replace("Bearer ", "");
-        return medicalAppointmentService.cancelAppointment(doctorId, availabilityId, token);
+        return medicalAppointmentService.cancelAppointment(doctorId, appointmentId, token);
     }
 
 }
