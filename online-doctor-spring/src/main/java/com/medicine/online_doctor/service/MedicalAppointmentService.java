@@ -47,11 +47,6 @@ public class MedicalAppointmentService {
         this.consultationRepository = consultationRepository;
     }
 
-
-
-
-
-
     public EntityModel<MedicalAppointment> createAppointment(Long doctorId, Long availabilityId, String token) {
         
         String username = jwtService.extractUserName(token);
@@ -109,6 +104,11 @@ public class MedicalAppointmentService {
         EntityModel<MedicalAppointment> entityModel = EntityModel.of(medicalAppointment);
 
         return entityModel;
+    }
+
+    public EntityModel<MedicalAppointment> cancelAppointment(Long doctorId, Long availabilityId, String token) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'cancelAppointment'");
     }
 
 }

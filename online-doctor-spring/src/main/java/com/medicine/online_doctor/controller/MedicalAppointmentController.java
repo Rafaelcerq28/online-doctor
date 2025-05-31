@@ -27,4 +27,11 @@ public class MedicalAppointmentController {
         return medicalAppointmentService.createAppointment(doctorId, availabilityId, token);
     }
 
+    @PostMapping("/appointments/{availabilityId}/doctor/{doctorId}/cancel")
+    @ResponseStatus(HttpStatus.OK)
+    public EntityModel<MedicalAppointment> cancelAppointment(@RequestHeader("Authorization") String authHeader, @PathVariable(value = "doctorId") Long doctorId, @PathVariable(value = "availabilityId") Long availabilityId) {
+        String token = authHeader.replace("Bearer ", "");
+        return medicalAppointmentService.cancelAppointment(doctorId, availabilityId, token);
+    }
+
 }
