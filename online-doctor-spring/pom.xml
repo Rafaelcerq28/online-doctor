@@ -42,6 +42,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<!-- stripe -->
+		<dependency>
+		<groupId>com.stripe</groupId>
+		<artifactId>stripe-java</artifactId>
+		<version>29.0.0</version>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
